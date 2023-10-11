@@ -3,6 +3,7 @@ import openai
 import requests
 
 st.header("Lido Copilot")
+openai.api_key = "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"
 
 """
 Everything you need to know about Lido Finance.
