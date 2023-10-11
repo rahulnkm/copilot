@@ -95,4 +95,4 @@ def talk_to_proposals():
 openai.api_key = st.text_input("OpenAI API Key", type="password")
 question = st.text_input("Talk to Lido proposals")
 
-query_proposals()
+st.write(query_proposals()["data"]["proposals"])
