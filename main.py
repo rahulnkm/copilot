@@ -32,6 +32,7 @@ def query_proposals():
     query = """
     query {
         proposals (
+            first: 1000000
             skip: 0,
             where: {
                 space_in: ["lido-snapshot.eth"],
