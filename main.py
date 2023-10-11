@@ -4,8 +4,6 @@ import requests
 
 st.header("Lido Copilot")
 
-openai.api_key = st.text_input("Enter API Key", type="password")
-
 st.write("""
 Everything you need to know about Lido Finance.
 We've passed all prior proposals with all relevant voting information.
@@ -13,6 +11,9 @@ Use it to get proposal summaries.
 Enter your personalized information to get suggestions.
 Talk to Lido proposals.
 """)
+
+openai.api_key = "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"
+# openai.api_key = st.text_input("Enter API Key", type="password")
 
 # Collect All Lido Proposals in SQL
 # Query GraphQL For Lido Info
