@@ -40,7 +40,7 @@ def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
                 space_in: ["lido-snapshot.eth"],
                 },
                 orderBy: "created",
-                orderDirection: asc
+                orderDirection: desc
                 ) {
                     id
                     title
@@ -70,11 +70,6 @@ def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     else:
         st.error('Request failed with status code', response.status_code)
 
-def combine_text():
-    combined_text = ""
-    for a in b:
-        combined_text = combined_text+a
-
 def embed_docm(docm): # EMBEDS ANY STRING
     response = openai.Embedding.create(
         input=docm,
@@ -85,8 +80,9 @@ def embed_docm(docm): # EMBEDS ANY STRING
 
 def create_index(props): # 
     embeds = []
-    for prop in props:
-        e = embed_docm(prop)
+    for p in props:
+        string = json.dumps(p)
+        e = embed_docm(string)
         embeds.append(e)
     return embeds
 
