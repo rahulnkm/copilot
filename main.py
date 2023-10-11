@@ -16,13 +16,6 @@ Talk to Lido proposals.
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 # openai.api_key = st.text_input("Enter API Key", type="password")
 
-# Collect All Lido Proposals in SQL
-# Query GraphQL For Lido Info
-# Put 
-# Embed SQL into 
-# Embed All Lido Proposals
-# Pass the embedding into the chat completion and 
-
 # User Enters Question in Text Input,
 # User Presses Button
 # Button Triggers API Call
@@ -83,11 +76,10 @@ def embed_docm(docm): # WORKS - EMBEDS ANY STRING
 def create_index(props): # 
     embeds = []
     for p in props:
-        string = json.dumps(p)
-        st.write(string)
+        str = json.dumps(p)
         # e = embed_docm(string)
-        # embeds.append(e)
-    # return embeds
+        embeds.append(str)
+    return embeds
 
 def similarity_search(question, embeds):
     q = embed_docm(question)
