@@ -27,7 +27,7 @@ Talk to Lido proposals.
 # Embed all proposals
 # Chat with embedding
 
-def query_proposals(): # FIRST 1000 PROPOSALS
+def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     url = "https://hub.snapshot.org/graphql"
     query = """
     query {
@@ -79,14 +79,17 @@ def embed_docm(docm):
 def create_index(props):
     embeds = []
     for prop in props:
-        e = embed_docm(x)
+        e = embed_docm(prop)
         embeds.append(e)
     return embeds
 
 def similarity_search(question, embeds):
-    # embed question
-    # similarity search for 
-    return docm
+    q = embed_docm(question)
+    sorted = []
+    for x in embeds:
+        # compare q to each
+        # move highest similarity to front
+    return 
 
 def talk_to_proposals():
 
@@ -95,4 +98,4 @@ def talk_to_proposals():
 openai.api_key = st.text_input("OpenAI API Key", type="password")
 question = st.text_input("Talk to Lido proposals")
 
-st.write(query_proposals()["data"]["proposals"])
+st.write(embed_docm("sup g"))
