@@ -6,7 +6,7 @@ import json
 st.header("Lido Copilot")
 
 st.write("""
-         I'm Liddy, your DAO Copilot - I know everything there is to know about Lido DAO.
+         I'm Liddy, your Lido DAO Copilot - I know everything there is to know about Lido DAO.
          I've reviewed all prior DAO proposals and know all relevant voting information.
          Use me to get proposal summaries, or any insights about the DAO.
          If you'd like any features in specific, contact @gigarahul on Twitter.
