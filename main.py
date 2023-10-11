@@ -81,17 +81,14 @@ def create_index(props): # WORKS - PASS PROPS => CREATES ARRAY OF PROP EMBEDS
         embeds.append(e)
     return embeds
 
-def cosine_similarity(a, b):
-    a = np.array(a)
-    b = np.array(b)
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-
 def similarity_search(question, embeds):
     q = embed_docm(question)
     sorted = []
     for x in embeds:
-
-        sorted.append(x)
+        a = np.array(q)
+        b = np.array(x)
+        siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+        sorted.append(siml)
         # compare q to each
         # move highest similarity to front
     return sorted[:10]
@@ -122,4 +119,4 @@ def talk_to_proposals(ctx, question):
 question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
-    st.write(create_index(query_proposals()))
+    st.write(similarity_search(question,create_index(query_proposals())))
