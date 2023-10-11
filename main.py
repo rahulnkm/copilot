@@ -12,7 +12,7 @@ Enter your personalized information to get suggestions.
 Talk to Lido proposals.
 """)
 
-openai.api_key = "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"
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 # openai.api_key = st.text_input("Enter API Key", type="password")
 
 # Collect All Lido Proposals in SQL
