@@ -2,6 +2,7 @@ import streamlit as st
 import openai
 import requests
 import json
+import numpy as np
 
 st.header("Lido Copilot")
 
@@ -79,6 +80,11 @@ def create_index(props): # WORKS - PASS PROPS => CREATES ARRAY OF PROP EMBEDS
         e = embed_docm(str)
         embeds.append(e)
     return embeds
+
+def cosine_similarity(a, b):
+    a = np.array(a)
+    b = np.array(b)
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 def similarity_search(question, embeds):
     q = embed_docm(question)
