@@ -24,7 +24,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # Embed all proposals
 # Chat with embedding
 
-def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
+def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS CLEANED JSON
     url = "https://hub.snapshot.org/graphql"
     query = """
     query {
@@ -61,7 +61,7 @@ def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     response = requests.post(url, json=data)
     if response.status_code == 200:
         json = response.json()
-        return json
+        return json["data"]["proposals"]
     else:
         st.error('Request failed with status code', response.status_code)
 
