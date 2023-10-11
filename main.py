@@ -8,3 +8,5 @@ We've passed all prior proposals with all relevant voting information.
 Use it to get proposal summaries.
 Enter your personalized information to get suggestions.
 """
+
+st.text_input("Enter your question")
