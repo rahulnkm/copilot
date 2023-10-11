@@ -3,15 +3,16 @@ import openai
 import requests
 
 st.header("Lido Copilot")
+
 openai.api_key = "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"
 
-"""
+st.write("""
 Everything you need to know about Lido Finance.
 We've passed all prior proposals with all relevant voting information.
 Use it to get proposal summaries.
 Enter your personalized information to get suggestions.
 Talk to Lido proposals.
-"""
+""")
 
 # Collect All Lido Proposals in SQL
 # Query GraphQL For Lido Info
@@ -27,6 +28,8 @@ Talk to Lido proposals.
 # Answer Is Displayed With st.write
 # Embed all proposals
 # Chat with embedding
+
+openai.api_key = st.text_input("OpenAI API Key", type="password")
 
 def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     url = "https://hub.snapshot.org/graphql"
@@ -69,7 +72,7 @@ def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     else:
         st.error('Request failed with status code', response.status_code)
 
-def embed_docm(docm):
+def embed_docm(docm): # EMBEDS ANY STRING
     response = openai.Embedding.create(
         input=docm,
         model="text-embedding-ada-002"
@@ -77,7 +80,7 @@ def embed_docm(docm):
     emb = response['data'][0]['embedding']
     return emb
 
-def create_index(props):
+def create_index(props): # 
     embeds = []
     for prop in props:
         e = embed_docm(prop)
@@ -92,11 +95,16 @@ def similarity_search(question, embeds):
         # move highest similarity to front
         return sorted
 
-def talk_to_proposals():
+def talk_to_proposals(context, question):
+    result = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": system_prompt}, # Bot is representative
+            {"role": "user", "content": question}
+            ]
+            )
+    return result['choices'][0]['message']['content']
 
-    return response
-
-openai.api_key = st.text_input("OpenAI API Key", type="password")
 question = st.text_input("Talk to Lido proposals")
 
 st.write(embed_docm("sup g"))
