@@ -32,14 +32,12 @@ def query_proposals():
     query = """
     query {
         proposals (
-            first: 20,
             skip: 0,
             where: {
-                space_in: ["yam.eth"],
-                state: "closed"
+                space_in: ["lido-snapshot.eth"],
                 },
                 orderBy: "created",
-                orderDirection: desc
+                orderDirection: asc
                 ) {
                     id
                     title
