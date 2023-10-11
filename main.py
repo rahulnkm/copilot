@@ -63,9 +63,10 @@ def query_proposals(): # FIRST 1000 PROPOSALS
     data = {'query': query}
     response = requests.post(url, json=data)
     if response.status_code == 200:
-        st.write(response["data"]["proposals"].json())
+        json = response.json()
+        return json
     else:
-        st.write('Request failed with status code', response.status_code)
+        st.error('Request failed with status code', response.status_code)
 
 def embed_docm(docm):
     response = openai.Embedding.create(
