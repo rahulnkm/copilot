@@ -71,7 +71,7 @@ def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     else:
         st.error('Request failed with status code', response.status_code)
 
-def embed_docm(docm): # EMBEDS ANY STRING
+def embed_docm(docm): # WORKS - EMBEDS ANY STRING
     response = openai.Embedding.create(
         input=docm,
         model="text-embedding-ada-002"
@@ -83,9 +83,10 @@ def create_index(props): #
     embeds = []
     for p in props:
         string = json.dumps(p)
-        e = embed_docm(string)
-        embeds.append(e)
-    return embeds
+        st.write(string)
+        # e = embed_docm(string)
+        # embeds.append(e)
+    # return embeds
 
 def similarity_search(question, embeds):
     q = embed_docm(question)
@@ -109,3 +110,4 @@ question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
     st.write(embed_docm("sup g"))
+    create_index()
