@@ -4,7 +4,7 @@ import requests
 
 st.header("Lido Copilot")
 
-openai.api_key = "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"
+openai.api_key = st.text_input("Enter API Key", type="password")
 
 st.write("""
 Everything you need to know about Lido Finance.
@@ -28,8 +28,6 @@ Talk to Lido proposals.
 # Answer Is Displayed With st.write
 # Embed all proposals
 # Chat with embedding
-
-openai.api_key = st.text_input("OpenAI API Key", type="password")
 
 def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
     url = "https://hub.snapshot.org/graphql"
@@ -71,6 +69,11 @@ def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS RAW JSON
         return json
     else:
         st.error('Request failed with status code', response.status_code)
+
+def combine_text():
+    combined_text = ""
+    for a in b:
+        combined_text = combined_text+a
 
 def embed_docm(docm): # EMBEDS ANY STRING
     response = openai.Embedding.create(
