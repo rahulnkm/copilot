@@ -89,7 +89,7 @@ def similarity_search(question, embeds):
     for x in embeds:
         # compare q to each
         # move highest similarity to front
-    return sorted
+        return sorted
 
 def talk_to_proposals():
 
