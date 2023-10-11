@@ -1,6 +1,7 @@
 import streamlit as st
 import openai
 import requests
+import json
 
 st.header("Lido Copilot")
 
