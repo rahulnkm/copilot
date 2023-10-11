@@ -77,7 +77,7 @@ def create_index(props): # WORKS - PASS PROPS => CREATES ARRAY OF PROP EMBEDS
     embeds = []
     for p in props:
         str = json.dumps(p)
-        e = embed_docm(string)
+        e = embed_docm(str)
         embeds.append(e)
     return embeds
 
