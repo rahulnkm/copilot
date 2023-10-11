@@ -24,7 +24,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # Embed all proposals
 # Chat with embedding
 
-def query_proposals(): # FIRST 1000 PROPOSALS, RETURNS CLEANED JSON
+def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS CLEANED JSON
     url = "https://hub.snapshot.org/graphql"
     query = """
     query {
@@ -73,12 +73,12 @@ def embed_docm(docm): # WORKS - PASS STRING => EMBEDS ANY STRING
     emb = response['data'][0]['embedding']
     return emb
 
-def create_index(props): # PASS PROPS => CREATES ARRAY OF PROP EMBEDS
+def create_index(props): # WORKS - PASS PROPS => CREATES ARRAY OF PROP EMBEDS
     embeds = []
     for p in props:
         str = json.dumps(p)
-        # e = embed_docm(string)
-        embeds.append(str)
+        e = embed_docm(string)
+        embeds.append(e)
     return embeds
 
 def similarity_search(question, embeds):
