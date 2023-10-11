@@ -110,4 +110,4 @@ question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
     # st.write(embed_docm("sup g"))
-    create_index()
+    create_index(query_proposals())
