@@ -63,7 +63,7 @@ def query_proposals(): # FIRST 1000 PROPOSALS
     data = {'query': query}
     response = requests.post(url, json=data)
     if response.status_code == 200:
-        st.write(response.data.proposals.json())
+        st.write(response["data"]["proposals"].json())
     else:
         st.write('Request failed with status code', response.status_code)
 
