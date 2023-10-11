@@ -6,11 +6,10 @@ import json
 st.header("Lido Copilot")
 
 st.write("""
-Everything you need to know about Lido Finance.
-We've passed all prior proposals with all relevant voting information.
-Use it to get proposal summaries.
-Enter your personalized information to get suggestions.
-Talk to Lido proposals.
+         I'm Liddy, your DAO Copilot - I know everything there is to know about Lido DAO.
+         I've reviewed all prior DAO proposals and know all relevant voting information.
+         Use me to get proposal summaries, or any insights about the DAO.
+         If you'd like any features in specific, contact @gigarahul on Twitter.
 """)
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
@@ -85,16 +84,31 @@ def similarity_search(question, embeds):
     q = embed_docm(question)
     sorted = []
     for x in embeds:
+
+        sorted.append(x)
         # compare q to each
         # move highest similarity to front
-        return sorted
+    return sorted[:10]
 
-def talk_to_proposals(context, question):
+def talk_to_proposals(ctx, question):
+    system_prompt = """
+    You are a professional business assistant for Lido DAO investors and stakeholders. Answer questions accurately and concisely and with a friendly cadence.
+    """
     result = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": system_prompt}, # Bot is representative
-            {"role": "user", "content": question}
+            {"role": "system", "content": system_prompt},
+            {"role": "system", "content": ctx[0]},
+            {"role": "system", "content": ctx[1]},
+            {"role": "system", "content": ctx[2]},
+            {"role": "system", "content": ctx[3]},
+            {"role": "system", "content": ctx[4]},
+            {"role": "system", "content": ctx[5]},
+            {"role": "system", "content": ctx[6]},
+            {"role": "system", "content": ctx[7]},
+            {"role": "system", "content": ctx[8]},
+            {"role": "system", "content": ctx[9]},
+            {"role": "user", "content": question},
             ]
             )
     return result['choices'][0]['message']['content']
@@ -102,6 +116,4 @@ def talk_to_proposals(context, question):
 question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
-    # st.write(embed_docm("sup g"))
     st.write(create_index(query_proposals()))
-    st.write(query_proposals())
