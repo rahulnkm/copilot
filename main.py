@@ -27,7 +27,7 @@ Talk to Lido proposals.
 # Embed all proposals
 # Chat with embedding
 
-def query_proposals():
+def query_proposals(): # FIRST 1000 PROPOSALS
     url = "https://hub.snapshot.org/graphql"
     query = """
     query {
@@ -63,13 +63,23 @@ def query_proposals():
     data = {'query': query}
     response = requests.post(url, json=data)
     if response.status_code == 200:
-        st.write(response.json())
+        st.write(response.data.proposals.json())
     else:
         st.write('Request failed with status code', response.status_code)
 
 def embed_docm(docm):
-    # embed each proposal as its own document
-    # create a 
+    response = openai.Embedding.create(
+        input=docm,
+        model="text-embedding-ada-002"
+        )
+    emb = response['data'][0]['embedding']
+    return emb
+
+def create_index(props):
+    embeds = []
+    for prop in props:
+        e = embed_docm(x)
+        embeds.append(e)
     return embeds
 
 def similarity_search(question, embeds):
