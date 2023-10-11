@@ -107,4 +107,5 @@ def talk_to_proposals(context, question):
 
 question = st.text_input("Talk to Lido proposals")
 
-st.write(embed_docm("sup g"))
+if st.button("Go"):
+    st.write(embed_docm("sup g"))
