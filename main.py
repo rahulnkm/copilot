@@ -83,7 +83,6 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     q = embed_docm(question)
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
-    return embeds
     scores = []
     for x in embeds:
         e = x["embed"]
