@@ -99,8 +99,6 @@ def supabase_search(question):
     q = embed_docm(question)
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
-    return embeds
-
     scores = []
     for x in embeds:
         a = np.array(q)
