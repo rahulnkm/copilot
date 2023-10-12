@@ -3,6 +3,7 @@ import openai
 import requests
 import json
 import numpy as np
+import supabase
 
 st.header("Lido Copilot")
 
