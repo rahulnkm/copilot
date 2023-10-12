@@ -91,8 +91,7 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
     context = []
     for x in top:
         index = scores.index(x)
-        text = embeds[index]
-        context.append(text)
+        context.append(index)
     return context
 
 def talk_to_proposals(ctx, question):
