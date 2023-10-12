@@ -101,10 +101,11 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     embeds = emb.data
     scores = []
     for x in embeds:
-        return x["embed"]
-
+        e = x["embed"]
         a = np.array(q)
-        b = np.array(x["embed"])
+        b = np.array(e)
+        return a, b
+    
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
     srt = sorted(scores, reverse=True)
