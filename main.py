@@ -75,7 +75,7 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
         str = json.dumps(p)
         e = embed_docm(str)
         embeds.append(e)
-        data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
+        # data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
     return embeds
 
 def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
@@ -93,6 +93,11 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
         index = scores.index(x)
         context.append(index)
     return context
+
+def sim_search_supabase(question):
+    q = embed_docm(question)
+    response = supabase.table('lido').select("*").execute()
+    return response
 
 def talk_to_proposals(ctx, question):
     system_prompt = """
@@ -121,3 +126,4 @@ question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
     st.write(similarity_search(question,create_index(query_proposals())))
+    st.write(sim_search_supabase("bru"))
