@@ -66,9 +66,10 @@ def embed_docm(docm): # WORKS - PASS STRING => RETURNS STRING EMBED
     emb = response['data'][0]['embedding']
     return emb
 
-def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY
+def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
     url: str = st.secrets["SUPABASE_URL"]
     key: str = st.secrets["SUPABASE_API_KEY"]
+    supabase: Client = create_client(url, key)
     embeds = []
     for p in props:
         str = json.dumps(p)
