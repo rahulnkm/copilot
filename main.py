@@ -99,7 +99,7 @@ def sim_search_supabase(question):
     key: str = st.secrets["SUPABASE_API_KEY"]
     supabase: Client = create_client(url, key)
     q = embed_docm(question)
-    response = supabase.table('lido').select("*").execute()
+    response = type(supabase.table('lido').select("*").execute())
     return response
 
 def talk_to_proposals(ctx, question):
