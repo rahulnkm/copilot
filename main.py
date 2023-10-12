@@ -87,13 +87,11 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     for x in embeds:
         e = x["embed"]
         final.append(e)
-    
-    a = np.array(q)
-    b = np.array(final)
-
-
-    siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-    return siml
+    for f in final:
+        a = np.array(q)
+        b = np.array(f)
+        siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+        return siml
     scores.append(siml)
     
     srt = sorted(scores, reverse=True)
