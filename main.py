@@ -81,6 +81,8 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
 
 def supabase_search(question): # CALLS EMBED FROM SUPABASE
     q = embed_docm(question)
+    st.write(np.array(q))
+
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
     final = []
@@ -91,6 +93,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
         a = np.array(q)
         b = np.array(f)
         return a.shape, a.dtype, b.shape, b.dtype
+        # different shapes, sizes
 
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         return siml
