@@ -83,15 +83,16 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     q = embed_docm(question)
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
-    scores = []
+    final = []
     for x in embeds:
         e = x["embed"]
-        a = np.array(q)
-        b = np.array(e) # this doesn't return
-        return type(a), type(b)
-
-        siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-        scores.append(siml)
+        final = final.append(e)
+    
+    a = np.array(q)
+    b = np.array(final) # this doesn't return
+    siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+    return siml
+    scores.append(siml)
     
     srt = sorted(scores, reverse=True)
     top = srt[:10]
