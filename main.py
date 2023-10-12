@@ -81,6 +81,8 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
         embeds.append(e)
     return embeds
 
+# STORE 
+
 def similarity_search(question, embeds): # WORKS - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
     q = embed_docm(question)
     scores = []
@@ -89,7 +91,7 @@ def similarity_search(question, embeds): # WORKS - PASS PROPS EMBEDS ARRAY + QUE
         b = np.array(x)
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
-    sorted = scores.sort()
+    sorted = sort(scores)
     return scores, sorted, type(sorted)
 
     top = sorted[:10]
