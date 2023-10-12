@@ -99,8 +99,8 @@ def supabase_search(question):
     key: str = st.secrets["SUPABASE_API_KEY"]
     supabase: Client = create_client(url, key)
     q = embed_docm(question)
-    response = type(supabase.table('lido').select("embed").execute())
-    return response
+    response = supabase.table('lido').select("embed").execute()
+    return response.data
 
 def talk_to_proposals(ctx, question):
     system_prompt = """
