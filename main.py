@@ -7,7 +7,7 @@ import numpy as np
 st.header("Lido Copilot")
 
 st.write("""
-         I'm Liddy, your Lido DAO Copilot - I know everything there is to know about Lido DAO.
+         I'm Liddy, your Lido DAO Copilot - I'm an LLM trained on every Lido DAO proposal.
          I've reviewed all prior DAO proposals and know all relevant voting information.
          Use me to get proposal summaries, or any insights about the DAO.
          If you'd like any features in specific, contact @gigarahul on Twitter.
@@ -24,7 +24,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # Embed all proposals
 # Chat with embedding
 
-def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS CLEANED JSON
+def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS PROPS CLEANED JSON
     url = "https://hub.snapshot.org/graphql"
     query = """
     query {
@@ -65,7 +65,7 @@ def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS CLEANED JSON
     else:
         st.error('Request failed with status code', response.status_code)
 
-def embed_docm(docm): # WORKS - PASS STRING => EMBEDS ANY STRING
+def embed_docm(docm): # WORKS - PASS STRING => RETURNS STRING EMBED
     response = openai.Embedding.create(
         input=docm,
         model="text-embedding-ada-002"
@@ -73,7 +73,7 @@ def embed_docm(docm): # WORKS - PASS STRING => EMBEDS ANY STRING
     emb = response['data'][0]['embedding']
     return emb
 
-def create_index(props): # WORKS - PASS PROPS => CREATES ARRAY OF PROP EMBEDS
+def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY
     embeds = []
     for p in props:
         str = json.dumps(p)
@@ -81,17 +81,22 @@ def create_index(props): # WORKS - PASS PROPS => CREATES ARRAY OF PROP EMBEDS
         embeds.append(e)
     return embeds
 
-def similarity_search(question, embeds):
+def similarity_search(question, embeds): # WORKS - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
     q = embed_docm(question)
-    sorted = []
+    scores = []
     for x in embeds:
         a = np.array(q)
         b = np.array(x)
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-        sorted.append(siml)
-        # compare q to each
-        # move highest similarity to front
-    return sorted[:10]
+        scores.append(siml)
+    sorted = scores.sort()
+    top = sorted[:10]
+    context = []
+    for x in top:
+        index = scores.index(x)
+        text = embeds[index]
+        context.append(text)
+    return context
 
 def talk_to_proposals(ctx, question):
     system_prompt = """
