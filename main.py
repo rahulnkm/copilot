@@ -89,7 +89,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
         final.append(e)
     for f in final:
         a = np.array(q)
-        b = np.array(float(f))
+        b = np.array(f)
         return a.shape, a.dtype, b.shape, b.dtype
 
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
