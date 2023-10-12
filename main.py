@@ -3,7 +3,7 @@ import openai
 import requests
 import json
 import numpy as np
-import supabase
+from supabase import create_client, Client
 
 st.header("Lido Copilot")
 
