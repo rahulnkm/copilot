@@ -94,12 +94,12 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
         context.append(index)
     return context
 
-def sim_search_supabase(question):
+def supabase_search(question):
     url: str = st.secrets["SUPABASE_URL"]
     key: str = st.secrets["SUPABASE_API_KEY"]
     supabase: Client = create_client(url, key)
     q = embed_docm(question)
-    response = type(supabase.table('lido').select("*").execute())
+    response = type(supabase.table('lido').select("embed").execute())
     return response
 
 def talk_to_proposals(ctx, question):
@@ -129,4 +129,4 @@ question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
     # st.write(similarity_search(question,create_index(query_proposals())))
-    st.write(sim_search_supabase("bru"))
+    st.write(supabase_search("bru"))
