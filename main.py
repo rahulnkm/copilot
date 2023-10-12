@@ -12,7 +12,7 @@ st.write("""
          I've reviewed all prior DAO proposals and know all relevant voting information.
          Use me to get proposal summaries, or any insights about the DAO.
          If you'd like any features in specific, contact @gigarahul on Twitter.
-""")
+         """)
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 # openai.api_key = st.text_input("Enter API Key", type="password")
@@ -67,11 +67,14 @@ def embed_docm(docm): # WORKS - PASS STRING => RETURNS STRING EMBED
     return emb
 
 def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY
+    url: str = st.secrets["SUPABASE_URL"]
+    key: str = st.secrets["SUPABASE_API_KEY"]
     embeds = []
     for p in props:
         str = json.dumps(p)
         e = embed_docm(str)
         embeds.append(e)
+        supabase.table("lido").insert({"text": str, "embed": e}).execute()
     return embeds
 
 def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
