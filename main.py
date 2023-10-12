@@ -97,12 +97,13 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
 
 def supabase_search(question): # CALLS EMBED FROM SUPABASE
     q = embed_docm(question)
+    return type
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
     scores = []
     for x in embeds:
         e = (x["embed"])
-        a = np.array(float(q))
+        a = np.array(q)
         b = np.array(float(e)) # this doesn't return 
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
