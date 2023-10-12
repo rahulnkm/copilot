@@ -104,7 +104,7 @@ def supabase_search(question):
     scores = []
     for x in embeds:
         a = np.array(q)
-        b = np.array(x)
+        b = np.array(x["embed"])
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
     srt = sorted(scores, reverse=True)
