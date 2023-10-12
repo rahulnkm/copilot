@@ -95,6 +95,9 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
     return context
 
 def sim_search_supabase(question):
+    url: str = st.secrets["SUPABASE_URL"]
+    key: str = st.secrets["SUPABASE_API_KEY"]
+    supabase: Client = create_client(url, key)
     q = embed_docm(question)
     response = supabase.table('lido').select("*").execute()
     return response
