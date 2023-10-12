@@ -5,6 +5,10 @@ import json
 import numpy as np
 from supabase import create_client, Client
 
+url: str = st.secrets["SUPABASE_URL"]
+key: str = st.secrets["SUPABASE_API_KEY"]
+supabase: Client = create_client(url, key)
+
 st.header("Lido Copilot")
 
 st.write("""
@@ -67,15 +71,12 @@ def embed_docm(docm): # WORKS - PASS STRING => RETURNS STRING EMBED
     return emb
 
 def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
-    url: str = st.secrets["SUPABASE_URL"]
-    key: str = st.secrets["SUPABASE_API_KEY"]
-    supabase: Client = create_client(url, key)
     embeds = []
     for p in props:
         str = json.dumps(p)
         e = embed_docm(str)
         embeds.append(e)
-        # data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
+        data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
     return embeds
 
 def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
@@ -95,12 +96,22 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
     return context
 
 def supabase_search(question):
-    url: str = st.secrets["SUPABASE_URL"]
-    key: str = st.secrets["SUPABASE_API_KEY"]
-    supabase: Client = create_client(url, key)
     q = embed_docm(question)
-    response = supabase.table('lido').select("embed").execute()
-    return response.data
+    emb = supabase.table('lido').select("embed").execute()
+    embeds = emb.data
+    scores = []
+    for x in embeds:
+        a = np.array(q)
+        b = np.array(x)
+        siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+        scores.append(siml)
+    srt = sorted(scores, reverse=True)
+    top = srt[:10]
+    context = []
+    for x in top:
+        index = scores.index(x)
+        context.append(index)
+    return context
 
 def talk_to_proposals(ctx, question):
     system_prompt = """
@@ -126,7 +137,8 @@ def talk_to_proposals(ctx, question):
     return result['choices'][0]['message']['content']
 
 question = st.text_input("Talk to Lido proposals")
+if question:
+    st.write(supabase_search(question))
 
-if st.button("Go"):
+# if st.button("Update database"):
     # st.write(similarity_search(question,create_index(query_proposals())))
-    st.write(supabase_search("bru"))
