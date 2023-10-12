@@ -74,7 +74,7 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
         str = json.dumps(p)
         e = embed_docm(str)
         embeds.append(e)
-        supabase.table("lido").insert({"text": str, "embed": e}).execute()
+        data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
     return embeds
 
 def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
