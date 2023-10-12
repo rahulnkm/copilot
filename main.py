@@ -97,6 +97,8 @@ def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS 
 
 def supabase_search(question): # CALLS EMBED FROM SUPABASE
     q = embed_docm(question)
+    return q
+
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
     return embeds
