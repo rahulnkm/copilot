@@ -16,14 +16,6 @@ st.write("""
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 # openai.api_key = st.text_input("Enter API Key", type="password")
 
-# User Enters Question in Text Input,
-# User Presses Button
-# Button Triggers API Call
-# API Call Returns Text Answer
-# Answer Is Displayed With st.write
-# Embed all proposals
-# Chat with embedding
-
 def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS PROPS CLEANED JSON
     url = "https://hub.snapshot.org/graphql"
     query = """
@@ -81,9 +73,7 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
         embeds.append(e)
     return embeds
 
-# STORE 
-
-def similarity_search(question, embeds): # WORKS - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
+def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
     q = embed_docm(question)
     scores = []
     for x in embeds:
