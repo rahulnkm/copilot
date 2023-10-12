@@ -62,7 +62,7 @@ def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS PROPS CLEANED JSO
     else:
         st.error('Request failed with status code', response.status_code)
 
-def embed_docm(docm): # WORKS - PASS STRING => RETURNS STRING EMBED
+def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS STRING EMBED
     response = openai.Embedding.create(
         input=docm,
         model="text-embedding-ada-002"
@@ -79,30 +79,14 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
         data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
     return embeds
 
-def similarity_search(question, embeds): # FAILS: CANT RETURN TEXT ARRAY - PASS PROPS EMBEDS ARRAY + QUESTION => RETURNS CONTEXT ARRAY
-    q = embed_docm(question)
-    scores = []
-    for x in embeds:
-        a = np.array(q)
-        b = np.array(x)
-        siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-        scores.append(siml)
-    srt = sorted(scores, reverse=True)
-    top = srt[:10]
-    context = []
-    for x in top:
-        index = scores.index(x)
-        context.append(index)
-    return context
-
 def supabase_search(question): # CALLS EMBED FROM SUPABASE
     q = embed_docm(question)
-    return type
     emb = supabase.table('lido').select("embed").execute()
     embeds = emb.data
+    return embeds
     scores = []
     for x in embeds:
-        e = (x["embed"])
+        e = x["embed"]
         a = np.array(q)
         b = np.array(float(e)) # this doesn't return 
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
