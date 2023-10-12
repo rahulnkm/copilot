@@ -90,7 +90,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
         b = np.array(e) # this doesn't return
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
-    return scores
+    return type(a), type(b)
     srt = sorted(scores, reverse=True)
     top = srt[:10]
     context = []
