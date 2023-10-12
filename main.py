@@ -91,8 +91,8 @@ def similarity_search(question, embeds): # WORKS - PASS PROPS EMBEDS ARRAY + QUE
         b = np.array(x)
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
-    sorted = sort(scores)
-    return scores, sorted, type(sorted)
+    sorted = scores.sorted()
+    return sorted
 
     top = sorted[:10]
     context = []
