@@ -101,9 +101,9 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     embeds = emb.data
     scores = []
     for x in embeds:
-        e = x["embed"]
-        a = np.array(q)
-        b = np.array(e)
+        e = (x["embed"])
+        a = np.array(float(q))
+        b = np.array(float(e)) # this doesn't return 
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         scores.append(siml)
     return scores
