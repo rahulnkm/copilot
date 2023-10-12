@@ -128,5 +128,5 @@ def talk_to_proposals(ctx, question):
 question = st.text_input("Talk to Lido proposals")
 
 if st.button("Go"):
-    st.write(similarity_search(question,create_index(query_proposals())))
+    # st.write(similarity_search(question,create_index(query_proposals())))
     st.write(sim_search_supabase("bru"))
