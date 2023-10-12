@@ -87,10 +87,11 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     array = []
     e = supabase.table('lido').select("embed").execute()
     embeds = e.data
-    return embeds
     final = []
     for x in embeds:
         e = x["embed"]
+        a = np.array(e)
+        return a.shape, a.dtype
         final.append(e)
     for f in final:
         a = np.array(q)
