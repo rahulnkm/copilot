@@ -80,13 +80,18 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
     return embeds
 
 def supabase_search(question): # CALLS EMBED FROM SUPABASE
+    
+    # EMBED QUESTION
     q = embed_docm(question)
     a = np.array(q)
     # return a.shape, a.dtype
     
+    # COMPARE qEMBED to aEMBED
     array = []
     e = supabase.table('lido').select("embed").execute()
     embeds = e.data
+    return embeds
+
     final = []
     for x in embeds:
         e = (x["embed"])
