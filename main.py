@@ -89,7 +89,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     # COMPARE qEMBED to aEMBED
     array = []
     e = supabase.table('lido').select("embed").execute()
-    return embeds
+    return e
     
     embeds = e.data
     
