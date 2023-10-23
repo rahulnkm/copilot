@@ -89,11 +89,9 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     embeds = e.data
     final = []
     for x in embeds:
-        e = x["embed"]
+        e = (x["embed"])
         a = np.array(e)
-        agh = [0, 2, 3]
-        aghhh = np.array(agh)
-        return aghhh.shape, aghhh.dtype
+        return 
         final.append(e)
     for f in final:
         a = np.array(q)
