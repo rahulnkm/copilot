@@ -76,12 +76,14 @@ def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS EMBED
 def update_supabase(props): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
     embeds = []
     for p in props:
-        return p
         str = json.dumps(p)
         e = embed_docm(str)
-        embeds.append(e)
-        data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
-    return embeds
+        if len(e) == 1536:
+            embeds.append(e)
+            data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
+            return embeds
+        else:
+            return st.error("Wrong size, update_supabase")
 
 def search_supabase(question): # CALLS EMBED FROM SUPABASE
     # EMBED QUESTION
