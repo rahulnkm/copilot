@@ -81,9 +81,10 @@ def update_supabase(props): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS E
         if len(e) == 1536:
             embeds.append(e)
             data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
-            return embeds
+            return data, count
         else:
             return st.error("Wrong size, update_supabase")
+    return embeds
 
 def search_supabase(question): # CALLS EMBED FROM SUPABASE
     # EMBED QUESTION
