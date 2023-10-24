@@ -94,7 +94,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     final = []
     for x in embeds:
         e = x["embed"]
-        return e
+        return e.length
         a = np.array(e)
         return a
         final.append(e)
