@@ -62,7 +62,7 @@ def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS JSON PROPS CLEANE
     else:
         st.error('Request failed with status code', response.status_code)
 
-def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS EMBED
+def embed(docm: str): # WORKS - PASS STRING => RETURNS EMBED
     response = openai.Embedding.create(
         input=docm,
         model="text-embedding-ada-002"
@@ -73,13 +73,13 @@ def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS EMBED
     else:
         return st.error("Embedding is wrong size")
 
-def update_supabase(): # REPLACE SUPABASE WITH NEW PROPS
+def update_database(): # REPLACE SUPABASE WITH NEW PROPS
     data, count = supabase.table("lido").delete()
     props = query_proposals()
     embeds = []
     for p in props:
         str = json.dumps(p)
-        e = embed_docm(str)
+        e = embed(str)
         if len(e) == 1536:
             embeds.append(e)
             data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
@@ -87,11 +87,10 @@ def update_supabase(): # REPLACE SUPABASE WITH NEW PROPS
             return st.error("Wrong size, update_supabase")
     return True
 
-def search_supabase(question): # CALLS EMBED FROM SUPABASE
-    q = embed_docm(question)
+def search_database(question): # CALLS EMBED FROM SUPABASE
+    q = embed(question)
     # works
-    a = np.array(q)
-    # return a.shape, a.dtype # ((1536,), dtype('float64'))
+    a = np.array(q) # - return a.shape, a.dtype # ((1536,), dtype('float64'))
     # COMPARE qEMBED to aEMBED
     # 1. Get JSON of all proposals as embed from Supabase
     array = []
@@ -100,7 +99,7 @@ def search_supabase(question): # CALLS EMBED FROM SUPABASE
     # return embeds
     # Compare each proposal embed to answer embed
     final = []
-    # return len(embeds[0]["embed"]) -- 19397!?!?!?
+    return len(embeds[0]["embed"]) # -- 19397!?!?!?
 
     for x in embeds:
         e = x["embed"]
@@ -153,8 +152,8 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    st.write(search_supabase(question))
-    # st.write(update_supabase())
+    st.write(search_database(question))
+    # st.write(update_database())
 
 
 # Goal: Talk to documentation; relevant documentation in the context window
