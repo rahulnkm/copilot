@@ -84,7 +84,7 @@ def update_supabase(): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS
             data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
         else:
             return st.error("Wrong size, update_supabase")
-    return embeds
+    return True
 
 def search_supabase(question): # CALLS EMBED FROM SUPABASE
     # EMBED QUESTION
