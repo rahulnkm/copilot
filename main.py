@@ -21,7 +21,7 @@ st.write("""
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 # openai.api_key = st.text_input("Enter API Key", type="password")
 
-def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS PROPS CLEANED JSON
+def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS JSON PROPS CLEANED 
     url = "https://hub.snapshot.org/graphql"
     query = """
     query {
@@ -62,7 +62,7 @@ def query_proposals(): # WORKS - FIRST 1000 PROPOSALS, RETURNS PROPS CLEANED JSO
     else:
         st.error('Request failed with status code', response.status_code)
 
-def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS STRING EMBED
+def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS EMBED
     response = openai.Embedding.create(
         input=docm,
         model="text-embedding-ada-002"
@@ -73,7 +73,8 @@ def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS STRING EMBED
     else:
         return st.error("Embedding is wrong size")
 
-def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
+def update_supabase(props): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
+    list = query_proposals()
     embeds = []
     for p in props:
         str = json.dumps(p)
@@ -82,7 +83,7 @@ def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBE
         data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
     return embeds
 
-def supabase_search(question): # CALLS EMBED FROM SUPABASE
+def search_supabase(question): # CALLS EMBED FROM SUPABASE
     # EMBED QUESTION
     q = embed_docm(question)
     a = np.array(q)
@@ -101,6 +102,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
         e = x["embed"]
         # return st.write(e), len(e)
         a = np.array(e)
+        return a.shapre, a.dtype
         # return a
         # final.append(e)
     for f in final:
@@ -111,7 +113,8 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
 
         siml = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         return siml
-    scores.append(siml)
+    
+    # scores.append(siml)
     
     srt = sorted(scores, reverse=True)
     top = srt[:10]
@@ -146,7 +149,7 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    st.write(supabase_search(question))
+    # st.write(search_supabase(question))
 
 # if st.button("Update database"):
     # st.write(similarity_search(question,create_index(query_proposals())))
