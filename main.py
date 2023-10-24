@@ -99,7 +99,7 @@ def search_database(question): # CALLS EMBED FROM SUPABASE
     # return embeds
     # Compare each proposal embed to answer embed
     final = []
-    return len(embeds[0]["embed"]) # -- 19397!?!?!?
+    return embeds, len(embeds[0]["embed"]) # -- 19397!?!?!?
 
     for x in embeds:
         e = x["embed"]
