@@ -83,8 +83,8 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     
     # EMBED QUESTION
     q = embed_docm(question)
-    return q
     a = np.array(q)
+    return a
     # return a.shape, a.dtype
     
     # COMPARE qEMBED to aEMBED
