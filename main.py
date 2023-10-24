@@ -95,9 +95,9 @@ def search_database(question): # CALLS EMBED FROM SUPABASE
     # return embeds[0]['embed'] # -- len() returns 19397!?!? but the content is actually 1536 length
     final = []
     for x in embeds:
-        e = x['embed']
-        a = np.array(e)
-        return a.shape, a.dtype
+        e = np.array(x['embed'])
+        e = e.reshape(-1, 1536)
+        return e.shape, e.dtype
         # return a
         # final.append(e)
     for f in final:
