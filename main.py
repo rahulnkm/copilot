@@ -102,7 +102,7 @@ def search_supabase(question): # CALLS EMBED FROM SUPABASE
         e = x["embed"]
         # return st.write(e), len(e)
         a = np.array(e)
-        return a.shapre, a.dtype
+        return a.shape, a.dtype
         # return a
         # final.append(e)
     for f in final:
