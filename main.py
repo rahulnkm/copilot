@@ -68,7 +68,10 @@ def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS STRING EMBED
         model="text-embedding-ada-002"
         )
     emb = response['data'][0]['embedding']
-    return emb
+    if len(emb) == 1536:
+        return emb
+    else:
+        return st.error("Embedding is wrong size")
 
 def create_index(props): # WORKS - PASS PROPS CLEANED JSON => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
     embeds = []
@@ -92,14 +95,14 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     # return embeds
     # Compare each proposal embed to answer embed
     final = []
-    return len(embeds[0]["embed"])
+    # return len(embeds[0]["embed"]) -- 19397!?!?!?
 
     for x in embeds:
         e = x["embed"]
-        return st.write(e), len(e)
+        # return st.write(e), len(e)
         a = np.array(e)
-        return a
-        final.append(e)
+        # return a
+        # final.append(e)
     for f in final:
         a = np.array(q)
         b = np.array(f)
