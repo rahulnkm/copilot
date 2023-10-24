@@ -84,10 +84,10 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     # EMBED QUESTION
     q = embed_docm(question)
     a = np.array(q)
-    return a.shape, a.dtype
-    # return a.shape, a.dtype
+    # return a.shape, a.dtype # ((1536,), dtype('float64'))
     
     # COMPARE qEMBED to aEMBED
+    # 1. Get JSON of all proposal embeds
     array = []
     e = supabase.table('lido').select("embed").execute()
     embeds = e.data
