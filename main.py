@@ -73,7 +73,8 @@ def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS EMBED
     else:
         return st.error("Embedding is wrong size")
 
-def update_supabase(props): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
+def update_supabase(): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
+    props = query_proposals()
     embeds = []
     for p in props:
         str = json.dumps(p)
@@ -103,7 +104,7 @@ def search_supabase(question): # CALLS EMBED FROM SUPABASE
 
     for x in embeds:
         e = x["embed"]
-        # return st.write(e), len(e)
+        return st.write(e), len(e)
         a = np.array(e)
         return a.shape, a.dtype
         # return a
