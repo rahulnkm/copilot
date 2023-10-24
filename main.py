@@ -96,8 +96,6 @@ def search_database(question): # CALLS EMBED FROM SUPABASE
     final = []
     for x in embeds:
         e = x['embed']
-        return e
-
         return st.write(e), len(e)
         a = np.array(e)
         return a.shape, a.dtype
