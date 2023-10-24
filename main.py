@@ -74,9 +74,9 @@ def embed_docm(docm: str): # WORKS - PASS STRING => RETURNS EMBED
         return st.error("Embedding is wrong size")
 
 def update_supabase(props): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS ARRAY // SEND TEXT + EMBED PAIR TO SUPABASE
-    list = query_proposals()
     embeds = []
     for p in props:
+        return p
         str = json.dumps(p)
         e = embed_docm(str)
         embeds.append(e)
@@ -149,7 +149,5 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    st.write(search_supabase(question))
-
-# if st.button("Update database"):
-    # st.write(similarity_search(question,create_index(query_proposals())))
+    # st.write(search_supabase(question))
+    update_supabase(query_proposals())
