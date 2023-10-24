@@ -82,7 +82,6 @@ def update_supabase(): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS
         if len(e) == 1536:
             embeds.append(e)
             data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
-            return data, count, len(data), len(e)
         else:
             return st.error("Wrong size, update_supabase")
     return embeds
