@@ -149,7 +149,7 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    # st.write(search_supabase(question))
+    st.write(search_supabase(question))
 
 # if st.button("Update database"):
     # st.write(similarity_search(question,create_index(query_proposals())))
