@@ -83,6 +83,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     
     # EMBED QUESTION
     q = embed_docm(question)
+    return q
     a = np.array(q)
     # return a.shape, a.dtype
     
@@ -90,6 +91,8 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     array = []
     e = supabase.table('lido').select("embed").execute()
     embeds = e.data
+
+    # All Proposal Embeds = 
     return embeds
 
     final = []
