@@ -87,7 +87,6 @@ def update_supabase(): # WORKS - PASS JSON PROPS CLEANED => RETURNS PROPS EMBEDS
     return True
 
 def search_supabase(question): # CALLS EMBED FROM SUPABASE
-    # EMBED QUESTION
     q = embed_docm(question)
     a = np.array(q)
     # return a.shape, a.dtype # ((1536,), dtype('float64'))
@@ -154,3 +153,6 @@ question = st.text_input("Talk to Lido proposals")
 if question:
     st.write(search_supabase(question))
     # st.write(update_supabase())
+
+
+# Goal: Talk to documentation; relevant documentation in the context window
