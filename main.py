@@ -150,4 +150,4 @@ def talk_to_proposals(ctx, question):
 question = st.text_input("Talk to Lido proposals")
 if question:
     # st.write(search_supabase(question))
-    update_supabase(query_proposals())
+    st.write(update_supabase(query_proposals()))
