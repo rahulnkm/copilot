@@ -89,20 +89,15 @@ def update_database(): # REPLACE SUPABASE WITH NEW PROPS
 
 def search_database(question): # CALLS EMBED FROM SUPABASE
     q = embed(question)
-    # works
-    a = np.array(q) # - return a.shape, a.dtype # ((1536,), dtype('float64'))
-    # COMPARE qEMBED to aEMBED
-    # 1. Get JSON of all proposals as embed from Supabase
-    array = []
+    a = np.array(q)
     e = supabase.table('lido').select("embed").execute()
     embeds = e.data
-    # return embeds
-    # Compare each proposal embed to answer embed
+    # return embeds[0]['embed'] # -- len() returns 19397!?!? but the content is actually 1536 length
     final = []
-    return embeds[0]['embed'], len(embeds[0]["embed"]) # -- 19397!?!?!?
-
     for x in embeds:
-        e = x["embed"]
+        e = x['embed']
+        return e
+
         return st.write(e), len(e)
         a = np.array(e)
         return a.shape, a.dtype
