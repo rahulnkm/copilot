@@ -94,10 +94,8 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     final = []
     for x in embeds:
         e = x["embed"]
-        return e
-
         a = np.array(e)
-        # return st.write(a)
+        return a
         final.append(e)
     for f in final:
         a = np.array(q)
