@@ -92,7 +92,7 @@ def supabase_search(question): # CALLS EMBED FROM SUPABASE
     # return embeds
     # Compare each proposal embed to answer embed
     final = []
-    return len(embeds[0])
+    return len(embeds[0]["embed"])
 
     for x in embeds:
         e = x["embed"]
