@@ -148,7 +148,7 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    query_proposals()
+    st.write(query_proposals())
     # st.write(search_database(question))
     # st.write(update_database())
 
