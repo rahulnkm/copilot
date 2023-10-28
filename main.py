@@ -78,7 +78,9 @@ def update_database(): # REPLACE SUPABASE WITH NEW PROPS
     props = query_proposals()
     embeds = []
     for p in props:
+        return p
         str = json.dumps(p)
+        url = f"https://snapshot.org/#/lido-snapshot.eth/proposal/{p}"
         e = embed(str)
         if len(e) == 1536:
             embeds.append(e)
@@ -90,13 +92,15 @@ def update_database(): # REPLACE SUPABASE WITH NEW PROPS
 def search_database(question): # CALLS EMBED FROM SUPABASE
     q = embed(question)
     a = np.array(q)
+    # -- works up to here
+
+
     e = supabase.table('lido').select("embed").execute()
     embeds = e.data
     # return embeds[0]['embed'] # -- len() returns 19397!?!? but the content is actually 1536 length
     final = []
     for x in embeds:
         e = np.array(x['embed'])
-        e = e.reshape(-1, 1536)
         return e.shape, e.dtype
         # return a
         # final.append(e)
@@ -144,7 +148,8 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    st.write(search_database(question))
+    query_proposals()
+    # st.write(search_database(question))
     # st.write(update_database())
 
 
