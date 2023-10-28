@@ -150,7 +150,7 @@ question = st.text_input("Talk to Lido proposals")
 if question:
     # st.write(query_proposals())
     # st.write(search_database(question))
-    st.write(update_database())
+    # st.write(update_database())
 
 
 # Goal: Talk to documentation; relevant documentation in the context window
