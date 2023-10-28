@@ -78,13 +78,13 @@ def update_database(): # REPLACE SUPABASE WITH NEW PROPS
     props = query_proposals()
     embeds = []
     for p in props:
-        return p
         str = json.dumps(p)
-        url = f"https://snapshot.org/#/lido-snapshot.eth/proposal/{p}"
+        id = p["id"]
+        url = f"https://snapshot.org/#/lido-snapshot.eth/proposal/{id}"
         e = embed(str)
         if len(e) == 1536:
             embeds.append(e)
-            data, count = supabase.table("lido").insert({"text": str, "embed": e}).execute()
+            data, count = supabase.table("lido").insert({"url": url, "embed": e}).execute()
         else:
             return st.error("Wrong size, update_supabase")
     return True
@@ -148,9 +148,9 @@ def talk_to_proposals(ctx, question):
 
 question = st.text_input("Talk to Lido proposals")
 if question:
-    st.write(query_proposals())
+    # st.write(query_proposals())
     # st.write(search_database(question))
-    # st.write(update_database())
+    st.write(update_database())
 
 
 # Goal: Talk to documentation; relevant documentation in the context window
