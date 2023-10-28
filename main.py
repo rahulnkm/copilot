@@ -74,7 +74,7 @@ def embed(docm: str): # WORKS - PASS STRING => RETURNS EMBED
         return st.error("Embedding is wrong size")
 
 def update_database(): # REPLACE SUPABASE WITH NEW PROPS
-    data, count = supabase.table("lido").delete()
+    # data, count = supabase.table("lido").delete()
     props = query_proposals()
     embeds = []
     for p in props:
